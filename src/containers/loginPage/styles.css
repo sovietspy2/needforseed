@@ -1,0 +1,20 @@
+.paper {
+    max-width: 400px !important; 
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flexDirection: column;
+    align-items: center !important;
+}
+
+.form {
+    margin: 0 auto;
+}
+
+.textfield { 
+    display: block !important;
+}
+
+.button {
+    margin-top: 20px !important;
+}
