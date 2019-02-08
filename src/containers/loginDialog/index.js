@@ -45,6 +45,7 @@ class LoginDialog extends React.Component {
         self.props.stateChanger("user", ({username:self.state.username}));
         console.log("got token");
         self.props.handleClose();
+        self.props.showMessage("Logged in!");
       }
     })
     .catch(function (error) {

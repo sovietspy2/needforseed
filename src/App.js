@@ -54,57 +54,15 @@ class App extends Component {
     this.state = {
       app: [],
       loginDialogOpen: false,
+      snakBar: {
+        open: false,
+        message: "none"
+      }
     };
     this.openLogin = this.openLogin.bind(this);
   }
 
-  stateChanger(key,value) {
-    this.setState(state => {
-       state.app[key] = value;
-       return state;
-    });
-  }
-
-
-  bottomClick() {
-    console.log("CLICKED BOTTOM");
-  }
-
-  openLogin() {
-    this.setState(state => {
-      state.loginDialogOpen= true;
-      return state;
-    });
-  }
-
-  closeLogin() {
-    this.setState(state => {
-      state.loginDialogOpen= false;
-      return state;
-    });
-  }
-
-  navigateToFrontPage() {
-    
-  }
-
-  handleLogut() {
-    const self = this;
-    axios.post('/logout', {})
-      .then(function (response) {
-        if (response.status===200) { 
-          //this.props.history.push("/");
-          self.setState({app: {
-            user: null
-          }
-        });
-          console.log("logged out");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-}
+ 
 
   render() {
 
@@ -118,9 +76,9 @@ class App extends Component {
       
       <div className="App">
 
-       
+        <CustomizedSnackbar handleClose={()=>this.closeSnakBar()} open={this.state.snakBar.open} message={this.state.snakBar.message} />
         <LoginDialog {...this.props} open={this.state.loginDialogOpen} app={this.state.app}
-         handleClose={() => this.closeLogin() } stateChanger={ this.stateChanger.bind(this)} leavePage={()=>this.navigateToFrontPage()}/>
+         handleClose={() => this.closeLogin() } showMessage={ (message)=> this.showMessage(message)} stateChanger={ this.stateChanger.bind(this)} leavePage={()=>this.navigateToFrontPage()}/>
 
 
         <Router>
@@ -166,6 +124,71 @@ class App extends Component {
     );
   }
 
+
+  closeSnakBar() {
+    this.setState(state => {
+      state.snakBar.open = false;
+      return state;
+   });
+  }
+
+  stateChanger(key,value) {
+    this.setState(state => {
+       state.app[key] = value;
+       return state;
+    });
+  }
+
+
+  bottomClick() {
+    console.log("CLICKED BOTTOM");
+  }
+
+  openLogin() {
+    this.setState(state => {
+      state.loginDialogOpen= true;
+      return state;
+    });
+  }
+
+  closeLogin() {
+    this.setState(state => {
+      state.loginDialogOpen= false;
+      return state;
+    });
+  }
+
+  showMessage(message) {
+    this.setState(state => {
+      state.snakBar.open=true;
+      state.snakBar.message=message;
+      return state;
+    });
+  }
+
+  handleLogut() {
+    const self = this;
+    axios.post('/logout', {})
+      .then(function (response) {
+        if (response.status===200) { 
+          //this.props.history.push("/");
+          self.setState({app: {
+            user: null
+          }
+        });
+          console.log("logged out");
+          self.setState(state => {
+            state.snakBar.open = true;
+            state.snakBar.message = "Logged out!";
+            return state;
+         });
+
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+}
 
 
 }
