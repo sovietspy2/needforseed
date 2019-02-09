@@ -18,7 +18,8 @@ class LoginDialog extends React.Component {
         this.state = {
             open: false,
             username: null,
-            password: null
+            password: null,
+            error: "",
           };
     }
 
@@ -46,9 +47,12 @@ class LoginDialog extends React.Component {
         console.log("got token");
         self.props.handleClose();
         self.props.showMessage("Logged in!");
+        self.state.error="";
       }
     })
     .catch(function (error) {
+      self.state.error = "login error";
+      self.props.showMessage("Authentication failed! Try again!");
       console.log(error);
     });
     
@@ -68,16 +72,16 @@ class LoginDialog extends React.Component {
       <div>
         <Dialog
           open={this.props.open}
-          onClose={this.props.handleClose}
+          onClose={()=> {this.state.error = ''; this.props.handleClose()}}
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="draggable-dialog-title">Login</DialogTitle>
-          <DialogContent>
-                    <TextField className="textfield" label="username" onChange={(e) => this.handleChange("username", e)} />
-                    <TextField className="textfield"  label="password" type="password" onChange={(e) => this.handleChange("password", e)} />                 
+          <DialogContent>                  
+                    <TextField error={this.state.error.length>0} className="textfield" label="username" onChange={(e) => this.handleChange("username", e)} />
+                    <TextField error={this.state.error.length>0} className="textfield"  label="password" type="password" onChange={(e) => this.handleChange("password", e)} />                 
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.handleClose} color="primary">
+            <Button onClick={()=> {this.state.error = ''; this.props.handleClose() }} color="primary">
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
