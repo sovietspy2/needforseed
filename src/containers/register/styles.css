@@ -1,20 +1,16 @@
 .paper {
-    max-width: 400px !important; 
-    width: 400px;
-    height: 200px;
-    display: flex;
-    flexDirection: column;
-    align-items: center !important;
+    margin: 100px;
 }
 
 .form {
     margin: 0 auto;
 }
 
-.textfield { 
-    display: block !important;
+.fields_in_register { 
+    margin: 10px;
 }
 
-.button {
-    margin-top: 20px !important;
+.buttons_in_register {
+    margin: 25px;
+    display: inline-block;
 }
