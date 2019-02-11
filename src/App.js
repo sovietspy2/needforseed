@@ -5,7 +5,7 @@ import './App.css';
 import 'typeface-roboto';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Test from "./containers/pageTest";
-import Home from "./containers/home";
+import Home from "./containers/home/index";
 import Login from "./containers/loginPage";
 import Posts from "./containers/posts";
 import Register from "./containers/register";
@@ -14,6 +14,7 @@ import Logout from "./containers/logout";
 import Profile from "./containers/profile";
 import LoginDialog from "./containers/loginDialog";
 import axios from "axios";
+import CreatePost from "./containers/createPost";
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -70,7 +71,7 @@ class App extends Component {
     console.log("APP STATE:",this.state);
 
     const LogoutWithAuth = withAuth(Logout, this.state.app);
-    const HomeWithAuth = withAuth(Home, this.state.app);
+    const CreatePostWithAuth = withAuth(CreatePost, this.state.app);
 
     return (
       
@@ -93,23 +94,27 @@ class App extends Component {
           {!this.state.app.user ?  <Button className="menuButton" variant="contained" component={Link} to="/register" >Register</Button> : null}
             <Button className="menuButton" variant="contained" component={Link} to="/" >Home</Button>
           {this.state.app.user ? <Button className="menuButton" variant="contained" onClick={() => this.handleLogut()} >logout</Button> : null}
-            <Button className="menuButton" variant="contained" component={Link} to="/test" >Hidden</Button>
+            <Button className="menuButton" variant="contained" component={Link} to="/posts" >Posts</Button>
             {this.state.app.user ?  <Button className="menuButton" variant="contained" component={Link} to="/profile" >Profile</Button> : null}
-
+            {this.state.app.user ?  <Button className="menuButton" variant="contained" component={Link} to="/upload" >create post </Button> : null}
             
         </Toolbar>
       </AppBar>
 
+      
+
 
         <Route path="/posts/:postId" render={props => <Posts {...props} extra={helloText} appName={this.state.appName}/>} />
-        <Route path="/register" component={Register} />
+        <Route path="/posts" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
+        <Route path="/register" component={Register} showMessage={ (message)=> this.showMessage(message)} />
+         <Route path="/upload" render={props => <CreatePostWithAuth app={this.state.app}  />} />
         <Route path="/test" render={props => <Test {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger}/>} />
         {/* <Route path="/login" render={props=> <Login {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} /> */}
         <Route path="/profile" render={props=> <Profile {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} />
         <Route path="/logout" render={props=> <LogoutWithAuth {...props}  app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} />
        
 
-        <Route exact path="/" render={props=> <HomeWithAuth {...props} app={this.state.app} stateChanger={ ()=> this.stateChanger()} />} />
+        <Route exact path="/" render={props=> <Home {...props} app={this.state.app} stateChanger={ ()=> this.stateChanger()} />} />
       </div>
     </Router>
 

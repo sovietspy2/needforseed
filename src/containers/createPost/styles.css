@@ -1,0 +1,21 @@
+.image_creation_container {
+    margin: 0 auto;
+    max-width: 800px;
+    height: 700px;
+}
+
+.create_post_img { 
+    max-width: 100%;
+    max-height: auto;
+}
+
+.post_creation_fields {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.select_cat {
+    width: 150px !important; 
+}

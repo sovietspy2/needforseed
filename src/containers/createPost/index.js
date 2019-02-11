@@ -1,0 +1,164 @@
+import React from "react";
+//import "./styles.css"
+import Button from '@material-ui/core/Button';
+import axios from "axios";
+import TextField from '@material-ui/core/TextField';
+import "./styles.css";
+import Icon from '@material-ui/icons/CloudUpload';
+import Select from "@material-ui/core/Select";
+import Chip from '@material-ui/core/Chip';
+import FormControl from "@material-ui/core/FormControl";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from "@material-ui/core/Input"
+
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
+
+export default class Home extends React.PureComponent{
+
+    constructor(props) {
+        super(props);
+        this.state = {file: null,
+            imagePreviewUrl: '', 
+            title: '', 
+            author: props.app.user.username,
+             cathegory: '', 
+             description: '',
+             loading: false,
+             url: '',
+            };
+      }
+
+      handleChange = name => event => {
+          console.log(this.state);
+        this.setState({ [name]: event.target.value });
+      }
+    
+      _handleSubmit(e) {
+        e.preventDefault();
+        console.log(this.state);
+        let self =this;
+        // TODO: do something with -> this.state.file
+        const config = {
+            hostname: 'api.imgur.com',
+            path: '/3/image',
+            baseURL: 'https://api.imgur.com',
+            headers: {
+              'Authorization': 'Client-ID 61a7212ebadbe4c'
+            }
+        };
+        self.setState({loading:true})
+        axios.post('https://api.imgur.com/3/image', this.state.file, config)
+            .then((response) => {
+                console.log(response);
+              self.setState({loading:false})
+              self.setState({url:response.data.data.link})
+              self.handleSave();
+            }).catch((error) => {
+                console.log(error);
+              //handle error
+            });
+        console.log('handle uploading-', this.state.file);
+      }
+    
+      _handleImageChange(e) {
+        e.preventDefault();
+    
+        let reader = new FileReader();
+        let file = e.target.files[0];
+    
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        }
+    
+        reader.readAsDataURL(file)
+      }
+
+      handleSave() { 
+          if (!this.state.file) {
+              return;
+          }
+          debugger;
+          const payload = {
+            currentTime: new Date( new Date().getTime() + (new Date().getTimezoneOffset() * 60000)),
+            author: this.state.author,
+            title: this.state.title,
+            cathegory: this.state.cathegory,
+            url: this.state.url,
+          }
+          
+      }
+    
+      render() {
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+          $imagePreview = (<img className="create_post_img" src={imagePreviewUrl} />);
+        } else {
+          $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+        }
+          
+
+    
+        return (
+
+            
+            <div className="image_creation_container">
+             <div className="post_creation_fields">
+            <TextField className="textfield" margin="normal" variant="outlined" label="Post name" value={this.state.title} onChange={this.handleChange("title")} />
+            <TextField className="textfield"  label="tags" margin="normal" variant="outlined" value={this.state.description} onChange={this.handleChange("description")} />  
+            
+                <FormControl >
+                <InputLabel className="cathegory_select" htmlFor="cathegory-customized-select" >
+                    Cathegory
+                </InputLabel>
+                <Select
+                    className='select_cat'
+                    value={this.state.cathegory}
+                    onChange={this.handleChange("cathegory")}
+                    input={<Input name="cat" id="cathegory-customized-select" />}
+                >
+                    <MenuItem value="">
+                    <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"ACTION"}>Action</MenuItem>
+                    <MenuItem value={"FILM"}>Film</MenuItem>
+                    <MenuItem value={"FAN ART"}>Fan art</MenuItem>
+                    <MenuItem value={"MEME"}>Meme</MenuItem>
+                </Select>
+                </FormControl>
+        </div>
+          <div className="previewComponent">
+            <form onSubmit={(e)=>this._handleSubmit(e)}>
+            <Button color="primary" component="label">
+            
+            <Icon />
+            Pick file
+                <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={(e)=>this._handleImageChange(e)}
+                     />
+            </Button>
+
+              <Button color="primary"className="submitButton" 
+                type="submit" 
+                onClick={(e)=>this._handleSubmit(e)}>Create Post</Button>
+            </form>
+            <div className="imgPreview">
+              {$imagePreview}
+            </div>
+             
+          </div>
+       
+              
+          </div>
+        )
+      }
+ }
