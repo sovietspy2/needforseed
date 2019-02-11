@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import api from "../../api";
 
 
 class LoginDialog extends React.Component {
@@ -36,7 +37,7 @@ class LoginDialog extends React.Component {
     const self = this;
     console.log(this.state.username, this.state.password);
     console.log("uh oh submitted");
-    axios.post('/api/authenticate', {
+    axios.post(api.LOGIN, {
       username: this.state.username,
       password: this.state.password
     })

@@ -3,6 +3,9 @@ import Post from "../../components/post";
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import api from "../../api";
+
+import { withStyles } from '@material-ui/core/styles';
 
 export default class Posts extends React.PureComponent{
 
@@ -21,7 +24,7 @@ export default class Posts extends React.PureComponent{
         return;
       }
 
-      const url = order ? "/api/nextPost" : "/api/previousPost";
+      const url = order ? api.NEXT_POST : api.PREVIOUS_POST;
       const self = this;
       console.log("SELF STATE ID:",self.state.id);
       axios.get(url, {
@@ -51,10 +54,11 @@ export default class Posts extends React.PureComponent{
 
   }
 
+
+
   loadLastPost() {
-    debugger;
     const self = this;
-    axios.get('/api/lastPost', {
+    axios.get(api.LATEST_POST, {
     })
     .then(function (response) {
       console.log(response);
@@ -83,6 +87,11 @@ export default class Posts extends React.PureComponent{
 
   render() {
 
+    const StyledButton = withStyles({
+      root: {
+        margin: '15px',
+      }
+    })(Button);
     console.log("home rneder", this.state);
     
     return (
@@ -91,11 +100,13 @@ export default class Posts extends React.PureComponent{
       
       {this.state.url ? <Post title={this.state.title} url={this.state.url} author={this.state.author}/> :
       <CircularProgress /> }
-      <div>
-           <Button  variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</Button>
-           <Button  variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</Button>
-           <Button  variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</Button>
+      <div className="button_group_posts" >
+           <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</>
+           <StyledButton variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</StyledButton>
+           <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
       </div>
+
+      
          
     {/* <List stateChanger={this.props.stateChanger}/> */}
     hello there

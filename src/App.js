@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import './App.css';
 
+import api from "./api";
+
 import 'typeface-roboto';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Test from "./containers/pageTest";
@@ -107,7 +109,7 @@ class App extends Component {
         <Route path="/posts/:postId" render={props => <Posts {...props} extra={helloText} appName={this.state.appName}/>} />
         <Route path="/posts" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
         <Route path="/register" component={Register} showMessage={ (message)=> this.showMessage(message)} />
-         <Route path="/upload" render={props => <CreatePostWithAuth app={this.state.app}  />} />
+         <Route path="/upload" render={props => <CreatePostWithAuth app={this.state.app} showMessage={ (message)=> this.showMessage(message)}  />} />
         <Route path="/test" render={props => <Test {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger}/>} />
         {/* <Route path="/login" render={props=> <Login {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} /> */}
         <Route path="/profile" render={props=> <Profile {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} />
@@ -173,7 +175,7 @@ class App extends Component {
 
   handleLogut() {
     const self = this;
-    axios.post('/logout', {})
+    axios.post(api.LOGOUT, {})
       .then(function (response) {
         if (response.status===200) { 
           //this.props.history.push("/");

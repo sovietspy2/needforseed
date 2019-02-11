@@ -11,6 +11,6 @@
     display: block;
 }
 
-.button {
-    margin-top: 20px important!;
+.button_group_posts {
+    display: flex;
 }

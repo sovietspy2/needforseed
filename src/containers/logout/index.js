@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 //import "./styles.css";
 import FormControl from '@material-ui/core/FormControl';
 import axios from "axios";
+import api from "../../api";
 
 
 export default class Logout extends React.PureComponent {
@@ -20,7 +21,7 @@ export default class Logout extends React.PureComponent {
      }
 
      componentDidMount() {
-        fetch('/checkToken')
+        fetch(api.CHECK_TOKEN)
         .then(res => {
           if (res.status === 200) {
             this.setState({ loggedIn: true });
@@ -38,7 +39,7 @@ export default class Logout extends React.PureComponent {
 
 
     handleLogut() {
-        axios.post('/logout', {})
+        axios.post(api.LOGOUT, {})
           .then(function (response) {
             if (response.status===200) { 
               this.props.history.push("/");

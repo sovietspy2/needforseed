@@ -9,21 +9,10 @@ import Typography from '@material-ui/core/Typography';
 
 
 export default class Post extends PureComponent {
-    
-     handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-      }
-
-
-     handleSubmit = (event) => {
-        event.preventDefault();
-        this.register();
-        console.log(this.state.username, this.state.password);
-        console.log("uh oh submitted");
-     }
+  
 
      like() {
-        axios.post('/api/register', {
+        axios.post('nutting', {
             username: this.state.username,
             password: this.state.password
           })

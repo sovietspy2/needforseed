@@ -13,9 +13,12 @@ import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from "@material-ui/core/Input"
+import api from "../../api";
 
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
+import { amber } from '@material-ui/core/colors/amber';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class Home extends React.PureComponent{
 
@@ -92,7 +95,28 @@ export default class Home extends React.PureComponent{
             cathegory: this.state.cathegory,
             url: this.state.url,
           }
+          this.savePost(payload);
           
+      }
+
+      savePost(payload) {
+        debugger;
+        console.log("STATE I HAVE N SAVE POST:",this.state);
+        fetch(api.SAVE_POST, {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+           },
+          body: JSON.stringify({payload: payload})
+        }).then( (response)=> {
+            if (response.status===200) {
+              this.state.loading=false;
+              this.props.showMessage("Upload succesful!");
+            }
+        }).then((data)=> {
+          console.log('Created Gist:', data);
+        });
       }
     
       render() {
@@ -105,11 +129,18 @@ export default class Home extends React.PureComponent{
         }
           
 
-    
+        if (this.state.loading) {
+          return (
+            <CircularProgress color="secondary" />
+           );
+        }
+
+  
         return (
 
             
-            <div className="image_creation_container">
+
+             <div className="image_creation_container">
              <div className="post_creation_fields">
             <TextField className="textfield" margin="normal" variant="outlined" label="Post name" value={this.state.title} onChange={this.handleChange("title")} />
             <TextField className="textfield"  label="tags" margin="normal" variant="outlined" value={this.state.description} onChange={this.handleChange("description")} />  

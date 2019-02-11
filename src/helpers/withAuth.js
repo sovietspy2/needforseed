@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from "axios";
+import api from "../api";
 
 export default function withAuth(ComponentToProtect, app) {
   return class extends Component {
@@ -16,7 +17,7 @@ export default function withAuth(ComponentToProtect, app) {
         this.setState({redirect: true});
       }
 
-      fetch('/checkToken')
+      fetch(api.CHECK_TOKEN)
       .then(res => {
         if (res.status === 200) {
           this.setState({ loading: false });
