@@ -101,7 +101,7 @@ export default class Posts extends React.PureComponent{
       {this.state.url ? <Post title={this.state.title} url={this.state.url} author={this.state.author}/> :
       <CircularProgress /> }
       <div className="button_group_posts" >
-           <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</>
+           <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</StyledButton>
            <StyledButton variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</StyledButton>
            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
       </div>
