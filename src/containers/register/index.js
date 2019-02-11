@@ -12,6 +12,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
+import api from "../../api";
 
 
 
@@ -65,7 +66,7 @@ export default class Register extends PureComponent {
     validateUsername() {
       console.log("USERNAME",this.state.username);
       const self = this;
-      fetch('/api/checkUsername',
+      fetch(api.VALIDATE_USERNAME,
       {
         method: 'POST',
         headers: {
@@ -104,7 +105,7 @@ export default class Register extends PureComponent {
 
      register() {
        
-        axios.post('/api/register', {
+        axios.post(api.REGISTER, {
             username: this.state.username,
             password: this.state.password,
             email: this.state.email,
@@ -119,7 +120,6 @@ export default class Register extends PureComponent {
      }
 
      clearValues() {
-       debugger;
       this.setState(state=> {
         state.username='';
         state.password='';
