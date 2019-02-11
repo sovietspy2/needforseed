@@ -44,7 +44,9 @@ export default class Register extends PureComponent {
      }
 
      validateEmail() {
+       debugger;
        const email = this.state.email;
+       console.log(email);
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (re.test(email)) {
         console.log("EMAIL OK");
@@ -54,6 +56,7 @@ export default class Register extends PureComponent {
         });
         this.register();
       } else {
+        console.log("email not ok");
       
         this.setState(state=> {
           state.emailError=true;
@@ -63,10 +66,9 @@ export default class Register extends PureComponent {
       }
     }
 
-    validateUsername() {
+    async validateUsername() {
       console.log("USERNAME",this.state.username);
-      const self = this;
-      fetch(api.VALIDATE_USERNAME,
+      const response2 = await fetch(api.VALIDATE_USERNAME,
       {
         method: 'POST',
         headers: {
@@ -74,32 +76,28 @@ export default class Register extends PureComponent {
             'Content-Type': 'application/json'
                  },
         body: JSON.stringify({username:this.state.username})
-      })
-      .then(res => {
-        console.log("EMAIL VALIDATON RESPONSE",res);
-        if (res.status === 200) {
-          self.setState(state=> {
+      });
+      console.log(response2);
+      debugger;
+        if (response2.status === 200) {
+          this.setState(state=> {
             state.usernameError=false;
             return state;
           });
-            this.validateEmail();
+          this.validateEmail();
         } else {
             console.log("nem sikerult valudalni");
-            self.setState(state=> {
+            this.setState(state=> {
             state.usernameError=true;
             return state;
           }); 
-          self.forceUpdate();
+          this.forceUpdate();
         }
-      })
-      .catch(err => {
-        console.error("MI A FASZ",err);
-      });    
+  
     }
 
     handleSave() {
         this.validateUsername();
-        this.clearValues();
     }
     
 
@@ -117,6 +115,7 @@ export default class Register extends PureComponent {
           .catch(function (error) {
             console.log(error);
           });
+          this.clearValues();
      }
 
      clearValues() {
