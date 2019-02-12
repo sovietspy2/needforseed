@@ -1,5 +1,7 @@
 
-const BACKEND_URL = process.env.BACKEND_URL || ''; // for cors
+const BACKEND_URL = process.env.REACT_APP_API_URL || ''; // for cors
+
+
 
 const api = {
     // Register login auth etc

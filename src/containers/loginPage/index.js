@@ -29,6 +29,7 @@ export default class Login extends PureComponent {
         console.log(this.state.username, this.state.password);
         console.log("uh oh submitted");
         axios.post('/api/authenticate', {
+          credentials: 'include',  
           username: this.state.username,
           password: this.state.password
         })

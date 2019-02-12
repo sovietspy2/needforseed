@@ -6,6 +6,7 @@
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
+    "env-cmd": "^8.0.2",
     "material-ui-flat-pagination": "^3.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -19,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:staging": "env-cmd .env.staging npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +32,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:1234/"
+  "proxy": "http://localhost:1234/",
+  "homepage": "http://app.wortex.stream"
 }

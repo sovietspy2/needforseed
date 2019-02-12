@@ -38,6 +38,7 @@ class LoginDialog extends React.Component {
     console.log(this.state.username, this.state.password);
     console.log("uh oh submitted");
     axios.post(api.LOGIN, {
+      withCredentials: true,
       username: this.state.username,
       password: this.state.password
     })

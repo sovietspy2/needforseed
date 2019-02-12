@@ -17,7 +17,7 @@ export default function withAuth(ComponentToProtect, app) {
         this.setState({redirect: true});
       }
 
-      fetch(api.CHECK_TOKEN)
+      fetch(api.CHECK_TOKEN, {credentials: 'include'})
       .then(res => {
         if (res.status === 200) {
           this.setState({ loading: false });

@@ -21,7 +21,7 @@ export default class Logout extends React.PureComponent {
      }
 
      componentDidMount() {
-        fetch(api.CHECK_TOKEN)
+        fetch(api.CHECK_TOKEN, {credentials: 'include'})
         .then(res => {
           if (res.status === 200) {
             this.setState({ loggedIn: true });
