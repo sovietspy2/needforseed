@@ -32,6 +32,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:1234/",
-  "homepage": "http://app.wortex.stream"
+  "proxy": "http://localhost:1234/"
 }
