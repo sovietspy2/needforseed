@@ -56,12 +56,16 @@ export default class Home extends React.PureComponent{
         self.setState({loading:true})
         axios.post('https://api.imgur.com/3/image', this.state.file, config)
             .then((response) => {
+              if (response.status===200) {
                 console.log(response);
-              self.setState({loading:false})
-              self.setState({url:response.data.data.link})
-              self.handleSave();
+                self.setState({url:response.data.data.link})
+                self.handleSave();
+              } else {
+                this.props.showMessage("Error occurred during upload! Try again!");
+              }
+             
             }).catch((error) => {
-                console.log(error);
+                this.props.showMessage("Error occurred during upload! Try again!");
               //handle error
             });
         console.log('handle uploading-', this.state.file);
@@ -85,9 +89,9 @@ export default class Home extends React.PureComponent{
 
       handleSave() { 
           if (!this.state.file) {
+              this.props.showMessage("ERROR! No image to upload! Try again!");
               return;
           }
-          debugger;
           const payload = {
             currentTime: new Date( new Date().getTime() + (new Date().getTimezoneOffset() * 60000)),
             author: this.state.author,
@@ -120,6 +124,16 @@ export default class Home extends React.PureComponent{
       }
     
       render() {
+
+        if (this.state.loading) {
+          return (
+            <div className="loading_wrapper">
+               <CircularProgress color="secondary" />
+            </div>
+           );
+        }
+
+
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
@@ -128,14 +142,6 @@ export default class Home extends React.PureComponent{
           $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
           
-
-        if (this.state.loading) {
-          return (
-            <CircularProgress color="secondary" />
-           );
-        }
-
-  
         return (
 
             

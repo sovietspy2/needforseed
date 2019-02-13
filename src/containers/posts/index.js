@@ -95,22 +95,16 @@ export default class Posts extends React.PureComponent{
     console.log("home rneder", this.state);
     
     return (
-      <header className="App-header">
-      <h1> POSTS </h1>
-      
-      {this.state.url ? <Post title={this.state.title} url={this.state.url} author={this.state.author}/> :
-      <CircularProgress /> }
-      <div className="button_group_posts" >
-           <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</StyledButton>
-           <StyledButton variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</StyledButton>
-           <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
-      </div>
+      <div className="post_paper">
+          <div className="button_group_posts" >
+            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</StyledButton>
+            <StyledButton variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</StyledButton>
+            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
+        </div>
 
-      
-         
-    {/* <List stateChanger={this.props.stateChanger}/> */}
-    hello there
-    </header>
+        {this.state.url ? <div class="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author}/></div> :
+        <CircularProgress /> }
+      </div>
     );
   }
  
