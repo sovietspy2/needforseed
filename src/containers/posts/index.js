@@ -16,8 +16,32 @@ export default class Posts extends React.PureComponent{
         url: null,
         title: null,
         author: null,
+        tags: null,
+        liked: false,
     };
   }
+
+  like() {
+    if (this.props.app && this.props.app.user && this.props.app.user.username && !this.state.liked) {
+      fetch(api.LIKE_POST, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+         },
+        body: JSON.stringify({_id: this.state.id, username: this.props.app.user.username})
+      }).then( (response)=> {
+          if (response.status===200) {
+            this.state.loading=false;
+            this.props.showMessage("LIKED!");
+            this.setState({liked:true});
+            this.setState({likes:this.state.likes+1});
+          }
+      }).then((data)=> {
+        console.log('Created Gist:', data);
+      });
+    }
+   }
 
   loadNextPost(order) {
       if (!this.state.id) {
@@ -36,13 +60,16 @@ export default class Posts extends React.PureComponent{
       })
       .then(function (response) {
         console.log(response);
-        const post = response.data[0];
+        const post = response.data;
         if (post) {
           self.setState(state=> {
             state.id = post._id;
             state.title= post.title;
             state.url= post.url;
             state.author= post.author;
+            state.tags=post.tags;
+            state.likes=post.likes;
+            state.liked=false;
             return state;
           });
           self.forceUpdate();
@@ -62,13 +89,16 @@ export default class Posts extends React.PureComponent{
     })
     .then(function (response) {
       console.log(response);
-      const post = response.data[0];
+      const post = response.data;
       if (post) {
         self.setState(state=> {
           state.id = post._id;
           state.title= post.title;
           state.url= post.url;
           state.author= post.author;
+          state.tags=post.tags;
+          state.likes=post.likes;
+          state.liked=false;
           return state;
         });
         self.forceUpdate();
@@ -102,7 +132,8 @@ export default class Posts extends React.PureComponent{
             <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
         </div>
 
-        {this.state.url ? <div className="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author}/></div> :
+        {this.state.url ? <div className="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author} 
+        tags={this.state.tags} likes={this.state.likes} like={()=> this.like()}/></div> :
         <CircularProgress /> }
       </div>
     );

@@ -122,7 +122,7 @@ class App extends Component {
       
 
 
-        <Route path="/posts/:postId" render={props => <Posts {...props} extra={helloText} appName={this.state.appName}/>} />
+        {/* <Route path="/posts/:postId" render={props => <Posts {...props} extra={helloText} appName={this.state.appName}/>} /> */}
         <Route path="/posts" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
         <Route path="/register" component={Register} showMessage={ (message)=> this.showMessage(message)} />
          <Route path="/upload" render={props => <CreatePostWithAuth app={this.state.app} showMessage={ (message)=> this.showMessage(message)}  />} />

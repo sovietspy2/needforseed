@@ -29,7 +29,7 @@ export default class Home extends React.PureComponent{
             title: '', 
             author: props.app.user.username,
              cathegory: '', 
-             description: '',
+             tags: '',
              loading: false,
              url: '',
             };
@@ -98,7 +98,8 @@ export default class Home extends React.PureComponent{
             title: this.state.title,
             cathegory: this.state.cathegory,
             url: this.state.url,
-          }
+            tags: this.state.tags,
+          };
           this.savePost(payload);
           
       }
@@ -149,7 +150,7 @@ export default class Home extends React.PureComponent{
              <div className="image_creation_container">
              <div className="post_creation_fields">
             <TextField className="textfield" margin="normal" variant="outlined" label="Post name" value={this.state.title} onChange={this.handleChange("title")} />
-            <TextField className="textfield"  label="tags" margin="normal" variant="outlined" value={this.state.description} onChange={this.handleChange("description")} />  
+            <TextField className="textfield"  label="tags" margin="normal" variant="outlined" value={this.state.tags} onChange={this.handleChange("tags")} />  
             
                 <FormControl >
                 <InputLabel className="cathegory_select" htmlFor="cathegory-customized-select" >

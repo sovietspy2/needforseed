@@ -9,21 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import ThumbUp from '@material-ui/icons/ThumbUpSharp';
 
 
+
 export default class Post extends PureComponent {
   
-
-     like() {
-        axios.post('nutting', {
-            username: this.state.username,
-            password: this.state.password
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-     }
 
      render() {
          console.log(" i render ");
@@ -35,12 +23,14 @@ export default class Post extends PureComponent {
                 <p className="">  </p>
                {/*  <Button className="">Like</Button> */}
             </div>
+              
+              <div className="post_right">
+              <div className="count">{this.props.likes}</div>
               <div className="post_like">
-              <Button onClick={this.props.handleLike}><ThumbUp/></Button>
+              
+              <Button onClick={this.props.like}><ThumbUp/></Button>
                 
               </div>
-              <div className="post_right">
-               
               <div>
                   <p>author: <br/> {this.props.author}</p>
               </div>

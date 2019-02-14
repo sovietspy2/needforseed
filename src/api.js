@@ -15,7 +15,8 @@ const api = {
     NEXT_POST: API_URL+'/nextPost',
     PREVIOUS_POST: API_URL+'/previousPost',
     LATEST_POST: API_URL+'/lastPost',
-    SAVE_POST: API_URL+'/savePost'
+    SAVE_POST: API_URL+'/savePost',
+    LIKE_POST: API_URL+'/likePost',
 
 
 }
