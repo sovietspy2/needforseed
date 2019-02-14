@@ -17,6 +17,7 @@ import Profile from "./containers/profile";
 import LoginDialog from "./containers/loginDialog";
 import axios from "axios";
 import CreatePost from "./containers/createPost";
+import Auth from "./containers/auth";
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -64,6 +65,21 @@ class App extends Component {
     };
     this.openLogin = this.openLogin.bind(this);
   }
+
+  componentDidMount() {
+    const username = localStorage.getItem('username');
+    const self=this;
+    debugger;
+    if (username) { 
+      fetch(api.CHECK_TOKEN, {credentials: 'include'})
+      .then(res => {
+        if (res.status === 200) {
+          self.stateChanger("user", ({username:username}));
+          self.showMessage("Logged in!");
+        }
+      });
+  }
+}
 
  
 
@@ -114,6 +130,7 @@ class App extends Component {
         {/* <Route path="/login" render={props=> <Login {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} /> */}
         <Route path="/profile" render={props=> <Profile {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} />
         <Route path="/logout" render={props=> <LogoutWithAuth {...props}  app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} />
+        <Route path="/auth" render={props=> <Auth {...props} app={this.state.app} stateChanger={this.stateChanger.bind(this)} />} />
        
 
         <Route exact path="/" render={props=> <Home {...props} app={this.state.app} stateChanger={ ()=> this.stateChanger()} />} />

@@ -37,7 +37,7 @@ export default class Login extends PureComponent {
           if (response.status===200) { 
             self.props.stateChanger("user", ({username:self.state.username}));
             console.log("got token");
-            self.props.history.push("/home");
+            self.props.history.push("/auth");
           }
         })
         .catch(function (error) {

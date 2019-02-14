@@ -102,7 +102,7 @@ export default class Posts extends React.PureComponent{
             <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
         </div>
 
-        {this.state.url ? <div class="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author}/></div> :
+        {this.state.url ? <div className="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author}/></div> :
         <CircularProgress /> }
       </div>
     );
