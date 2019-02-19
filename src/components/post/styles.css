@@ -36,34 +36,35 @@
     float: left;
   }
   
-  .post_right { 
-    padding-top: 200px;
-    height: 100%;
-    min-height: 100%;
-    color: black;
-    width: 20%;
+  .post_bottom { 
     display: flex;
-    float: right;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
   }
 
-  .post_right p {
+  .post .post_bottom .post_likes {
+    padding: 6px 0px 6px 16px;
+    background-color: aquamarine;
+    justify-content: center;
+    border-radius: 5px;
+  }
+
+  .post .post_bottom .post_author {
+    padding: 0 10px 0 10px;
+    background-color: darksalmon;
+    border-radius: 5px;
+  }
+
+  .post p {
     color: darkslategray;
   }
 
-  .post_like {
-    padding-bottom: 100px;
-  }
+ 
 
   .post_tags {
     color: palevioletred;
     clear: both;
   }
 
-  .post_right .count{
-    border-radius: 100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+
 

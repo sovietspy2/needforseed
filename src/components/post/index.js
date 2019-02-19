@@ -17,22 +17,20 @@ export default class Post extends PureComponent {
          console.log(" i render ");
         return (
             <div className="post">
-            <div className="post_left">
+      
               <h2 className='title'> {this.props.title} </h2>
                 <img className="image" src={this.props.url}/>
                 <p className="">  </p>
                {/*  <Button className="">Like</Button> */}
-            </div>
-              
-              <div className="post_right">
-              <div className="count">{this.props.likes}</div>
-              <div className="post_like">
-              
+            
+            <div className="post_bottom" >
+              <div className="post_likes">  
+              {this.props.likes}
               <Button onClick={this.props.like}><ThumbUp/></Button>
                 
               </div>
-              <div>
-                  <p>author: <br/> {this.props.author}</p>
+              <div className="post_author">
+                  <p>author: {this.props.author}</p>
               </div>
               </div>
               <div className="post_tags">Tags: {this.props.tags}</div>
