@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import api from "../../api";
+import CommentList from "../../components/commentList";
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -18,6 +19,7 @@ export default class Posts extends React.PureComponent{
         author: null,
         tags: null,
         liked: false,
+        comments: [],
     };
   }
 
@@ -63,14 +65,7 @@ export default class Posts extends React.PureComponent{
         const post = response.data;
         if (post) {
           self.setState(state=> {
-            state.id = post._id;
-            state.title= post.title;
-            state.url= post.url;
-            state.author= post.author;
-            state.tags=post.tags;
-            state.likes=post.likes;
-            state.liked=false;
-            return state;
+            state=self.extractData(state, post);
           });
           self.forceUpdate();
         }
@@ -81,7 +76,17 @@ export default class Posts extends React.PureComponent{
 
   }
 
-
+  extractData(state, post) {
+    state.id = post._id;
+    state.title= post.title;
+    state.url= post.url;
+    state.author= post.author;
+    state.tags=post.tags;
+    state.likes=post.likes;
+    state.comments = post.comments;
+    state.liked=false;
+    return state;
+  }
 
   loadLastPost() {
     const self = this;
@@ -92,14 +97,7 @@ export default class Posts extends React.PureComponent{
       const post = response.data;
       if (post) {
         self.setState(state=> {
-          state.id = post._id;
-          state.title= post.title;
-          state.url= post.url;
-          state.author= post.author;
-          state.tags=post.tags;
-          state.likes=post.likes;
-          state.liked=false;
-          return state;
+          state=self.extractData(state, post);
         });
         self.forceUpdate();
       }
@@ -133,8 +131,9 @@ export default class Posts extends React.PureComponent{
         </div>
 
         {this.state.url ? <div className="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author} 
-        tags={this.state.tags} likes={this.state.likes} like={()=> this.like()}/></div> :
-        <CircularProgress /> }
+        tags={this.state.tags} likes={this.state.likes} like={()=> this.like()}/>
+        </div> : <CircularProgress /> }
+        {this.state.comments ? <CommentList comments={this.state.comments} /> : null}
       </div>
     );
   }

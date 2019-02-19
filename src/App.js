@@ -69,7 +69,6 @@ class App extends Component {
   componentDidMount() {
     const username = localStorage.getItem('username');
     const self=this;
-    debugger;
     if (username) { 
       fetch(api.CHECK_TOKEN, {credentials: 'include'})
       .then(res => {
@@ -84,8 +83,6 @@ class App extends Component {
  
 
   render() {
-
-    let helloText = "TEST DEFAULT VALUE"
     console.log("APP STATE:",this.state);
 
     const LogoutWithAuth = withAuth(Logout, this.state.app);
