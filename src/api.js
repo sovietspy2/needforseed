@@ -17,6 +17,8 @@ const api = {
     LATEST_POST: API_URL+'/lastPost',
     SAVE_POST: API_URL+'/savePost',
     LIKE_POST: API_URL+'/likePost',
+    SAVE_COMMENT: API_URL+'/saveComment',
+    LOAD_COMMENTS: API_URL+'/loadComments',
 
 
 }

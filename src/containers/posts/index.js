@@ -7,6 +7,7 @@ import api from "../../api";
 import CommentList from "../../components/commentList";
 
 import { withStyles } from '@material-ui/core/styles';
+import CreateComment from "../../components/createComment";
 
 export default class Posts extends React.PureComponent{
 
@@ -20,7 +21,12 @@ export default class Posts extends React.PureComponent{
         tags: null,
         liked: false,
         comments: [],
+        comment: "",
     };
+  }
+
+  isLoggedIn() {
+    return this.props.app && this.props.app.user && this.props.app.user.username;
   }
 
   like() {
@@ -34,7 +40,8 @@ export default class Posts extends React.PureComponent{
         body: JSON.stringify({_id: this.state.id, username: this.props.app.user.username})
       }).then( (response)=> {
           if (response.status===200) {
-            this.state.loading=false;
+            //this.state.loading=false;
+            this.setState({loading:false})
             this.props.showMessage("LIKED!");
             this.setState({liked:true});
             this.setState({likes:this.state.likes+1});
@@ -111,6 +118,54 @@ export default class Posts extends React.PureComponent{
     this.loadLastPost();
   }
 
+  handleChange(name, event) {
+    console.log(this.state.comment);
+    if (event) {
+      this.setState({ [name]: event.target.value });
+    }
+}
+
+  handleCommentSave() {
+
+    const currentTime =  new Date( new Date().getTime() + (new Date().getTimezoneOffset() * 60000));
+    const thisFuckinApp = this;
+    const payload = {
+      id: this.state.id,
+      text: this.state.comment,
+      username: this.props.app.user.username,
+      date: currentTime,
+    };
+    this.setState({comment: null});
+    this.setState({comments: null});
+    fetch(api.SAVE_COMMENT, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+       },
+      body: JSON.stringify({payload: payload})
+    }).then( (response)=> {
+        if (response.status===200) {
+            thisFuckinApp.reloadComments();
+        }
+    });
+    
+  }
+
+  reloadComments() {
+    fetch(api.LOAD_COMMENTS,{
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+       },
+      body: JSON.stringify({_id: this.state.id})})
+    .then(res => res.json())
+    .then(data=> {
+        this.setState({comments: data});
+    });
+  }
+
  
 
   render() {
@@ -133,7 +188,9 @@ export default class Posts extends React.PureComponent{
         {this.state.url ? <div className="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author} 
         tags={this.state.tags} likes={this.state.likes} like={()=> this.like()}/>
         </div> : <CircularProgress /> }
-        {this.state.comments ? <CommentList comments={this.state.comments} /> : null}
+        <h2>Comments:</h2><hr/>
+        { this.isLoggedIn() ? <CreateComment  value={this.state.comment} handleChange={(e) => this.handleChange("comment", e)} handleClick={()=> this.handleCommentSave()}/> : null}
+        {this.state.comments ? <CommentList comments={this.state.comments} /> : <CircularProgress />}
       </div>
     );
   }

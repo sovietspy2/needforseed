@@ -9,7 +9,7 @@ export default class CommentList extends React.PureComponent {
         const renderContent = (comments) => comments.map(comment=>{
             debugger;
                 return(
-                    <Comment username={comment.username} text={comment.text} date={comment.date}/>
+                    <Comment key={comment.date+comment.username} username={comment.username} text={comment.text} date={comment.date}/>
                 );
         });
 

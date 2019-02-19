@@ -1,4 +1,26 @@
-.comment_block {
-    background-color: blanchedalmond;
+.fuck_wrapper .comment_block {
+    margin: 5px;
+    background-color: white;
     border-radius: 5px;
+    max-width: 80%;
+    margin: 0 auto;
+
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+    align-content: space-between;
+}
+
+.fuck_wrapper .comment_block .username {
+    text-align: left;
+    color: red;
+}
+
+.fuck_wrapper .comment_block .text {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.fuck_wrapper .comment_block .date {
+    text-align: right;
+    color: brown;
 }
