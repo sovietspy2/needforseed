@@ -1,4 +1,6 @@
 .create_post_main {
+    margin: 0 auto;
+    max-width: 45%;
     display: flex;
     justify-content: center;
     text-align: center;

@@ -10,11 +10,13 @@ export default function(props) {
             <TextField
                 value={props.value}
                 onChange={props.handleChange}
-                id="outlined-full-width"
+
                 label="Your comment"
                 style={{ margin: 8 }}
                 placeholder="Write your comment here :)"
                 fullWidth
+                multiline
+                rowsMax="2"
                 margin="normal"
                 variant="outlined"
                 InputLabelProps={{

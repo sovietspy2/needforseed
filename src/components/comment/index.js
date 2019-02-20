@@ -8,10 +8,10 @@ export default function(props) {
         const timeAgo = new TimeAgo('en-US')
         return(
             <div className="fuck_wrapper">
-            <div className="comment_block">
+            <div className="comment">
                 <div className="username">@{props.username}: </div>
-                <div className="text">{props.text}</div>
                 <div className="date">{timeAgo.format(new Date(props.date))}</div>
+                <div className="text">{props.text}</div>
             </div>
             </div>
         );

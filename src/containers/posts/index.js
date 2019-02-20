@@ -128,6 +128,9 @@ export default class Posts extends React.PureComponent{
 
   handleCommentSave() {
 
+    if (this.state.comment.trim()==="") {
+      return;
+    }
     const currentTime =  new Date();
     const thisFuckinApp = this;
     const payload = {
@@ -136,7 +139,7 @@ export default class Posts extends React.PureComponent{
       username: this.props.app.user.username,
       date: currentTime,
     };
-    this.setState({comment: null});
+    this.setState({comment: ""});
     this.setState({comments: null});
     fetch(api.SAVE_COMMENT, {
       method: 'post',
