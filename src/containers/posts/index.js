@@ -91,6 +91,7 @@ export default class Posts extends React.PureComponent{
     state.tags=post.tags;
     state.likes=post.likes;
     state.comments = post.comments;
+    state.comment = '';
     state.liked=false;
     return state;
   }
@@ -127,7 +128,7 @@ export default class Posts extends React.PureComponent{
 
   handleCommentSave() {
 
-    const currentTime =  new Date( new Date().getTime() + (new Date().getTimezoneOffset() * 60000));
+    const currentTime =  new Date();
     const thisFuckinApp = this;
     const payload = {
       id: this.state.id,

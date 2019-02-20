@@ -8,6 +8,7 @@ export default function(props) {
     return (
         <div className="create_post_main">
             <TextField
+                value={props.value}
                 onChange={props.handleChange}
                 id="outlined-full-width"
                 label="Your comment"

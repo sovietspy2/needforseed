@@ -99,6 +99,7 @@ export default class Home extends React.PureComponent{
             cathegory: this.state.cathegory,
             url: this.state.url,
             tags: this.state.tags,
+            comments: [],
           };
           this.savePost(payload);
           

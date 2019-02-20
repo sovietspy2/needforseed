@@ -23,4 +23,5 @@
 .fuck_wrapper .comment_block .date {
     text-align: right;
     color: brown;
+    flex-shrink: 0;
 }
