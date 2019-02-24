@@ -44,7 +44,6 @@ export default class Register extends PureComponent {
      }
 
      validateEmail() {
-       debugger;
        const email = this.state.email;
        console.log(email);
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -78,7 +77,6 @@ export default class Register extends PureComponent {
         body: JSON.stringify({username:this.state.username})
       });
       console.log(response2);
-      debugger;
         if (response2.status === 200) {
           this.setState(state=> {
             state.usernameError=false;

@@ -19,6 +19,7 @@ const api = {
     LIKE_POST: API_URL+'/likePost',
     SAVE_COMMENT: API_URL+'/saveComment',
     LOAD_COMMENTS: API_URL+'/loadComments',
+    LOAD_POST_BY_ID: API_URL+'/loadPost'
 
 
 }

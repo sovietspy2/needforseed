@@ -14,7 +14,7 @@ export default class Posts extends React.PureComponent{
   constructor(props) {
     super(props); 
     this.state = {
-        id: null,
+        id: props.match.params.postId,
         url: null,
         title: null,
         author: null,
@@ -22,6 +22,7 @@ export default class Posts extends React.PureComponent{
         liked: false,
         comments: [],
         comment: "",
+        error: false,
     };
   }
 
@@ -115,8 +116,43 @@ export default class Posts extends React.PureComponent{
     });
   }
 
-  componentDidMount() { 
-    this.loadLastPost();
+  loadPostById() {
+    fetch(api.LOAD_POST_BY_ID, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+       },
+      body: JSON.stringify({_id: this.state.id})
+    }).then( (response)=> {
+        if (response.status===200) {
+          this.setState({error: false});
+          return response.json();
+        } else{
+          this.setState({error: true});
+          return JSON.parse(null);
+        }
+       
+    })
+    .then((data)=> {
+      console.log('DATA:', data);
+      if (data) {
+        this.setState(state=> {
+          state=this.extractData(state, data);
+        });
+        this.forceUpdate();
+      }
+      
+    });
+  }
+
+  componentDidMount() {
+    if (this.state.id) {
+      this.loadPostById();
+    } else {
+      this.loadLastPost();
+    }
+    
   }
 
   handleChange(name, event) {
@@ -174,16 +210,19 @@ export default class Posts extends React.PureComponent{
 
   render() {
 
+
     const StyledButton = withStyles({
       root: {
         margin: '15px',
       }
     })(Button);
-    console.log("home rneder", this.state);
+    console.log("home rneder", this.props);
     
     return (
       <div className="post_paper">
-          <div className="button_group_posts" >
+        {this.state.error ? <h1> ERROR: 404 not found</h1> : 
+        <div>
+        <div className="button_group_posts" >
             <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</StyledButton>
             <StyledButton variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</StyledButton>
             <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
@@ -195,7 +234,8 @@ export default class Posts extends React.PureComponent{
         <h2>Comments:</h2><hr/>
         { this.isLoggedIn() ? <CreateComment  value={this.state.comment} handleChange={(e) => this.handleChange("comment", e)} handleClick={()=> this.handleCommentSave()}/> : null}
         {this.state.comments ? <CommentList comments={this.state.comments} /> : <CircularProgress />}
-      </div>
+       </div>}
+       </div>
     );
   }
  

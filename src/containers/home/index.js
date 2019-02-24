@@ -25,7 +25,7 @@ export default class Home extends React.PureComponent{
         <ul>
           <li>Authentication login / register</li>
           <li>Creating post</li>
-          <li>Viewing post</li>
+          <li>Viewing post /posts /posts/:id</li>
           <li>Liking post</li>
           <li>Commenting on post</li>
         </ul>

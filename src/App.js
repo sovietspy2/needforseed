@@ -54,7 +54,6 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       app: [],
       loginDialogOpen: false,
@@ -119,8 +118,8 @@ class App extends Component {
       
 
 
-        {/* <Route path="/posts/:postId" render={props => <Posts {...props} extra={helloText} appName={this.state.appName}/>} /> */}
-        <Route path="/posts" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
+        <Route exact path="/posts/:postId" render={props => <Posts {...props} appName={this.state.appName}/>} />
+        <Route exact path="/posts" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
         <Route path="/register" component={Register} showMessage={ (message)=> this.showMessage(message)} />
          <Route path="/upload" render={props => <CreatePostWithAuth app={this.state.app} showMessage={ (message)=> this.showMessage(message)}  />} />
         <Route path="/test" render={props => <Test {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger}/>} />
