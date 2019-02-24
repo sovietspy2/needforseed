@@ -21,6 +21,15 @@ export default class Home extends React.PureComponent{
         <p>This website is created by SovietSpy2</p>
         <p>Content produced by Govamoro</p>
 
+        <h4>Features:</h4>
+        <ul>
+          <li>Authentication login / register</li>
+          <li>Creating post</li>
+          <li>Viewing post</li>
+          <li>Liking post</li>
+          <li>Commenting on post</li>
+        </ul>
+
       have fun!
       </header>
       );
