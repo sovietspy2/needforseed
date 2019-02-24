@@ -75,6 +75,7 @@ export default class Posts extends React.PureComponent{
           self.setState(state=> {
             state=self.extractData(state, post);
           });
+          self.props.history.push('/posts/'+post._id);
           self.forceUpdate();
         }
       })
@@ -108,6 +109,7 @@ export default class Posts extends React.PureComponent{
         self.setState(state=> {
           state=self.extractData(state, post);
         });
+        self.props.history.push('/posts/'+post._id);
         self.forceUpdate();
       }
     })
