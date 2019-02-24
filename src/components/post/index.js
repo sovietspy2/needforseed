@@ -8,6 +8,7 @@ import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import ThumbUp from '@material-ui/icons/ThumbUpSharp';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Link } from "react-router-dom";
 
 
 export default class Post extends PureComponent {
@@ -15,7 +16,7 @@ export default class Post extends PureComponent {
       constructor(props) {
         super(props);
         this.state = {
-          loading: false,
+          liked: false,
         }
       }
 
@@ -24,11 +25,11 @@ export default class Post extends PureComponent {
       }
 
      render() {
-         console.log(" i render ");
+         console.log(this.props);
         return (
             <div className="post">
       
-              <h2 className='title'> {this.props.title} </h2>
+              <Link to={`posts/${this.props.id}`}><h2 className='title'> {this.props.title} </h2></Link>
                 <img 
                   onLoad={()=> console.log("IMG LOADED")}
                   className="image" src={this.props.url}/> 

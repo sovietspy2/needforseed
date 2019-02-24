@@ -18,6 +18,7 @@ import LoginDialog from "./containers/loginDialog";
 import axios from "axios";
 import CreatePost from "./containers/createPost";
 import Auth from "./containers/auth";
+import PostsList from "./containers/postsList";
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -118,8 +119,8 @@ class App extends Component {
       
 
 
-        <Route exact path="/posts/:postId" render={props => <Posts {...props} appName={this.state.appName}/>} />
-        <Route exact path="/posts" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
+        <Route exact path="/posts/:postId" render={props => <Posts {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
+        <Route exact path="/posts" render={props => <PostsList {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger} showMessage={ (message)=> this.showMessage(message)} />} />
         <Route path="/register" component={Register} showMessage={ (message)=> this.showMessage(message)} />
          <Route path="/upload" render={props => <CreatePostWithAuth app={this.state.app} showMessage={ (message)=> this.showMessage(message)}  />} />
         <Route path="/test" render={props => <Test {...props} app={this.state.app} stateChanger={ ()=>this.stateChanger}/>} />

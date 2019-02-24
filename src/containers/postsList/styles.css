@@ -1,0 +1,16 @@
+ .fancy_wrapper {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.fancy_wrapper .post_list {
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .fancy_wrapper {
+        width: 100%;
+        margin: 0 auto;
+        
+    }
+  }

@@ -208,6 +208,7 @@ export default class Posts extends React.PureComponent{
     });
   }
 
+
  
 
   render() {
@@ -225,13 +226,13 @@ export default class Posts extends React.PureComponent{
         {this.state.error ? <h1> ERROR: 404 not found</h1> : 
         <div>
         <div className="button_group_posts" >
-            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous</StyledButton>
+            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(false)}>Previous page</StyledButton>
             <StyledButton variant="contained" color="secondary" onClick={()=>this.loadLastPost()}>LATEST POST</StyledButton>
-            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next</StyledButton>
+            <StyledButton variant="contained" color="primary" onClick={()=>this.loadNextPost(true)}>Next page</StyledButton>
         </div>
 
-        {this.state.url ? <div className="mypost"><Post title={this.state.title} url={this.state.url} author={this.state.author} 
-        tags={this.state.tags} likes={this.state.likes} like={()=> this.like()}/>
+        {this.state.url ? <div className="mypost"><Post id={this.state.id} title={this.state.title} url={this.state.url} author={this.state.author} 
+        tags={this.state.tags} likes={this.state.likes} like={()=> this.like()} match={this.props.match}/>
         </div> : <CircularProgress /> }
         <h2>Comments:</h2><hr/>
         { this.isLoggedIn() ? <CreateComment  value={this.state.comment} handleChange={(e) => this.handleChange("comment", e)} handleClick={()=> this.handleCommentSave()}/> : null}
